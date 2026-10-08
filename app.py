@@ -1,5 +1,6 @@
 
 import streamlit as st
+import streamlit.components.v1 as components
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.dml.color import RGBColor
@@ -222,22 +223,23 @@ header {
 slides = [
     "INTRO",
     "FOMO",
+    "HIGHLIGHT-REEL EFFECT",
     "FOMO CYCLE",
     "FEAR OF REGRET",
-    "HIGHLIGHT-REEL EFFECT",
-    "THE INVISIBLE CROWD"
     "THE PHONE",
+    "THE INVISIBLE CROWD",
     "2-CHOICE EXPERIMENT",
     "SCARCITY EFFECT",
     "MIMETIC THEORY",
     "JOMO",
-    "JOMO BENEFITS",
-    "JOMO & Self Awareness"
-    "FOMO vs JOMO"
-    "How can we practice JOMO ",
-    "UHV",
+    "WHY DID JOMO BECOME IMPORTANT",
+    "JOMO & SELF AWARENESS",
+    "FOMO vs JOMO",
+    "UHV"
+    "How can we practice JOMO",
     "TAKEAWAY"
 ]
+
 
 
 # ==========================================
@@ -255,11 +257,33 @@ if "slide" not in st.session_state:
 def next_slide():
     if st.session_state.slide < len(slides) - 1:
         st.session_state.slide += 1
-
+        scroll_to_top()
+    
 
 def previous_slide():
     if st.session_state.slide > 0:
         st.session_state.slide -= 1
+        scroll_to_top()
+
+def scroll_to_top():
+    components.html(
+        """
+        <script>
+        setTimeout(function() {
+            const elements = window.parent.document.querySelectorAll('*');
+
+            elements.forEach(function(el) {
+                if (el.scrollTop > 0 && el.scrollHeight > el.clientHeight) {
+                    el.scrollTop = 0;
+                }
+            });
+
+            window.parent.scrollTo(0, 0);
+        }, 100);
+        </script>
+        """,
+        height=0,
+    )
 
 
 # ==========================================
@@ -365,7 +389,7 @@ elif slide == 1:
 # SLIDE 3 — FOMO CYCLE
 # ==========================================
 
-elif slide == 2:
+elif slide == 3:
 
     st.markdown(
         '<div class="section-title">The FOMO Cycle</div>',
@@ -437,7 +461,7 @@ elif slide == 2:
 # SLIDE 4 — FEAR OF REGRET
 # ==========================================
 
-elif slide == 3:
+elif slide == 4:
 
     st.markdown(
         '<div class="section-title">The Fear of Regret</div>',
@@ -516,7 +540,7 @@ elif slide == 3:
 # SLIDE 5 — HIGHLIGHT REEL EFFECT
 # ==========================================
 
-elif slide == 4:
+elif slide == 2:
 
     st.markdown(
         '<div class="section-title">The Highlight-Reel Effect</div>',
@@ -633,7 +657,7 @@ elif slide == 4:
 # SLIDE 6 — THE INVISIBLE CROWD
 # ==========================================
 
-elif slide == 5:
+elif slide == 6:
 
     st.markdown(
         '<div class="section-title">The Invisible Crowd</div>',
@@ -678,7 +702,7 @@ elif slide == 5:
 # SLIDE 6 — THE PHONE
 # ==========================================
 
-elif slide == 6:
+elif slide == 5:
 
     st.markdown(
         '<div class="section-title">The Phone That Knows Nothing...</div>',
@@ -1270,7 +1294,7 @@ elif slide == 10:
 # SLIDE 12 — JOMO & SELF-AWARENESS
 # ==========================================
 
-elif slide == 11:
+elif slide == 12:
 
     st.markdown(
         '<div class="section-title">JOMO & Self-Awareness</div>',
@@ -1353,8 +1377,48 @@ elif slide == 11:
     # ==========================================
 # SLIDE 13 — HOW CAN WE PRACTICE JOMO?
 # ==========================================
+elif slide == 11:
+    st.markdown(
+        '<div class="section-title">Why Did JOMO Become Important?</div>',
+        unsafe_allow_html=True
+    )
 
-elif slide == 12:
+    st.markdown(
+        '<div class="section-subtitle">A world of constant comparison.</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown("""
+    <div class="content-card">
+        <h3>🌐 SOCIAL MEDIA & COMPARISON</h3>
+        <p>
+            Social media makes it easy to see what everyone else is doing.
+        </p>
+        <p>
+            ✈️ Someone is travelling.<br>
+            🎉 Someone is at a party.<br>
+            🍽️ Someone is dining at an expensive restaurant.
+        </p>
+        <p>
+            Constant exposure can make us compare
+            <b>our lives with theirs</b> — creating the feeling that we are missing out.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="quote-card">
+        <b>🌱 The JOMO Mindset</b><br><br>
+        “I don't need to experience what everyone else is experiencing.”
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="quote-card">
+        <b>“My life does not become less valuable just because I am not participating in everything.”</b>
+    </div>
+    """, unsafe_allow_html=True)
+elif slide == 14:
 
     st.markdown(
         '<div class="section-title">How Can We Practice JOMO?</div>',
@@ -1447,7 +1511,7 @@ elif slide == 12:
         """,
         unsafe_allow_html=True
     )
-elif slide == 13:
+elif slide == 15:
 
     st.markdown(
         """
@@ -1507,7 +1571,8 @@ with col1:
     if slide > 0:
 
         st.button(
-            "← Previous",
+     
+          "← Previous",
             on_click=previous_slide,
             use_container_width=True
         )
